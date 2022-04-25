@@ -1,6 +1,6 @@
 {
   "name": "@zano/zano-rpc",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "description": "Zano RPC Daemon and RPC Wallet Javascript Library",
   "main": "index.js",
   "directories": {
