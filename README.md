@@ -24,7 +24,7 @@ Please refer to the [documentation](https://zano.github.io/zano-rpc-js/module-RP
 const rpcDaemon = require('@zano/zano-rpc').RPCDaemon
 
 const daemonClient = rpcDaemon.createDaemonClient({
-  url: 'http://127.0.0.1:39994'
+  url: 'http://127.0.0.1:12111'
 })
 // When using a self signed certificate with HTTPS you need to set the function sslRejectUnauthorized to false.
 daemonClient.sslRejectUnauthorized(false)
@@ -37,7 +37,7 @@ Please refer to the [documentation](https://zano.github.io/zano-rpc-js/module-RP
 const rpcDaemon = require('@zano/zano-rpc').RPCDaemon
 
 const daemonClient = rpcDaemon.createDaemonClient({
-  url: 'http://127.0.0.1:39994',
+  url: 'http://127.0.0.1:12111',
   username: 'user',
   password: 'pass'
 })
@@ -52,7 +52,7 @@ Please refer to the [documentation](https://zano.github.io/zano-rpc-js/module-RP
 const rpcWallet = require('@zano/zano-rpc').RPCWallet
 
 const walletClient = rpcWallet.createWalletClient({
-  url: 'http://127.0.0.1:20000'
+  url: 'http://127.0.0.1:12233'
 })
 // When using a self signed certificate with HTTPS you need to set the function sslRejectUnauthorized to false.
 walletClient.sslRejectUnauthorized(false)
@@ -65,7 +65,7 @@ Please refer to the [documentation](https://zano.github.io/zano-rpc-js/module-RP
   const rpcWallet = require('@zano/zano-rpc').RPCWallet
 
   const walletClient = rpcWallet.createWalletClient({
-  url: 'http://127.0.0.1:20000',
+  url: 'http://127.0.0.1:12233',
   username: 'user',
   password: 'pass'
 })
