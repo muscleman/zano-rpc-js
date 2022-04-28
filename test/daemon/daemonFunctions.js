@@ -108,7 +108,7 @@ describe('RPCDaemon tests functions', function () {
     .to.eventually.have.property('alias_info')
     .to.eventually.have.keys('address', 'alias', 'comment', 'tracking_key')
   })
-  it('get_alias_reward should return current reward that must be paid to register an alias name.', () => {
+  xit('get_alias_reward should return current reward that must be paid to register an alias name.', () => {
     const opts = {
       alias: config.alias
     }
@@ -117,6 +117,33 @@ describe('RPCDaemon tests functions', function () {
     // .to.eventually.have.keys('')
     .to.eventually.have.property('reward')
     .to.eventually.equal(config.aliasFee)
+  })
+  xit('get_blocks_details should return current reward that must be paid to register an alias name.', () => {
+    const opts = {
+      height_start: 100,
+      count: 1
+    }
+    return expect(daemonClient.get_blocks_details(opts))
+    // .to.eventually.have.property('status')
+    // .to.eventually.have.keys('')
+    .to.eventually.have.property('blocks')
+    //.to.eventually.have.keys('actual_timestamp', 'already_generated_coins', 'base_reward', 'blob', 'block_cumulative_size', 'block_tself_size', 'cumulative_diff_adjusted', 'cumulative_diff_precise', 'difficulty', 'effective_fee_median', 'height', 'id', 'is_orphan','miner_text_info', 'object_in_json','penalty', 'pow_seed', 'prev_id', 'summary_reward','this_block_fee_median', 'timestamp', 'total_fee' ,'total_txs_size', 'transactions_details')
+  })
+  xit('get_tx_details should  transaction details by specified transaction hash identifier.', () => {
+    const opts = {
+      tx_hash: '07edca07b935b23fef3bee741e73f4b63772a600dd37823b0293266323d12b82'
+    }
+    return expect(daemonClient.get_tx_details(opts))
+    // .to.eventually.have.property('status')
+    // .to.eventually.have.keys('')
+    .to.eventually.have.property('tx_info')
+  })
+  it('search_by_id should  transaction details by specified transaction hash identifier.', () => {
+    const opts = {
+      id: '07edca07b935b23fef3bee741e73f4b63772a600dd37823b0293266323d12b82'
+    }
+    return expect(daemonClient.search_by_id(opts))
+    .to.eventually.have.property('status', 'OK', 'types_found', ['tx'])
   })
   // it('getBlockHeadersRange with heights should return block headers', () => {
   //   const opts = {
