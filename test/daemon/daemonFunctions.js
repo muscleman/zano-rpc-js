@@ -185,10 +185,13 @@ describe('RPCDaemon tests functions', function () {
   //   return expect(daemonClient.getHardForkInfo())
   //     .to.eventually.have.property('status', 'OK')
   // })
-  // it('getInfo should retrieve general informations', () => {
-  //   return expect(daemonClient.getInfo())
-  //     .to.eventually.have.property('block_size_limit')
-  // })
+  it('getInfo should return various information and stats.', () => {
+    const opts = {
+      flags: 4294967295
+    }
+    return expect(daemonClient.getInfo(opts))
+      .to.eventually.have.property('alias_count')
+  })
   xit('getLastBlockHeader should return a block header', () => {
     return expect(daemonClient.getLastBlockHeader())
     .to.eventually.have.property('block_header')
