@@ -9,6 +9,6 @@ exports = module.exports = {
   stagenetWalletAddress: 'ZxBj1cQSiCfhQKHvZF8nFtM6dgEn2htg66p3Z9BUhVNmivASMwhX2dbN52gMLq9CKs38vTwMRJccRA4MeLqrQEGg1bWpjgQfQ',
   txids: ['8d63cfb68c053f2bcfe54d8792a24dbb46df15399f18c9814e2aa914c5dabc3b'],
   spent_key: '8618320bf108e2827f927c7f7300b47bc21ca7708fd800b09a74070face15e3d',
-  alias: 'muscleonvacation',
+  alias: 'vendor1',
   aliasFee: 100000000000
 }

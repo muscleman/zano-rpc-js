@@ -19,58 +19,20 @@ describe('RPCDaemon tests functions', function () {
   })
 
   daemonClient.sslRejectUnauthorized(false)
-
-  // it('flushTxPool should return OK', () => {
-  //   return expect(daemonClient.flushTxPool({ txids: ['cca25843d040eae32be1e1eb4fbac3bab9c8a2634e46ba22bdcb609c41f77ff2'] }))
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('getAlternateChains should return OK', () => {
-  //   return expect(daemonClient.getAlternateChains())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('setBans with parameter should return OK', () => {
-  //   const opts = {
-  //     bans: [{ host: '192.168.1.51', ban: true, seconds: 30 }, { ip: 838969536, ban: true, seconds: 30 }]
-  //   }
-  //   return expect(daemonClient.setBans(opts))
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('getBans with parameter should return banned hosts and ips', () => {
-  //   return expect(daemonClient.getBans())
-  //     .to.eventually.have.property('bans')
-  //     .to.have.deep.members([{ host: '192.168.1.50', ip: 838969536, seconds: 30 },
-  //       { host: '192.168.1.51', ip: 855746752, seconds: 30 }])
-  // })
-  // it('getBlock with hash should return a block', () => {
-  //   const opts = {
-  //     hash: config.blockHash
-  //   }
-  //   return expect(daemonClient.getBlock(opts))
-  //     .to.eventually.have.property('block_header')
-  //     .to.eventually.have.property('height', config.blockHeight)
-  // })
-  // it('getBlock with height should return a block', () => {
-  //   const opts = {
-  //     height: config.blockHeight
-  //   }
-  //   return expect(daemonClient.getBlock(opts))
-  //     .to.eventually.have.property('block_header')
-  //     .to.eventually.have.property('hash', config.blockHash)
-  // })
-  xit('getBlockCount should return a count gt 0', () => {
+  it('getBlockCount should return a count gt 0', () => {
     return expect(daemonClient.getBlockCount())
       .to.eventually.have.keys('status', 'count')
       .to.eventually.have.property('count')
       .to.eventually.be.gt(0)
   })
-  xit('on_getBlockHash with height should return a matching hash', () => {
+  it('on_getBlockHash with height should return a matching hash', () => {
     const opts = {
       height: config.blockHeight
     }
     return expect(daemonClient.on_getBlockHash(opts))
       .to.eventually.equal(config.blockHash)
   })
-  xit('getBlockHeaderByHash with hash should return a block header with a matching height', () => {
+  it('getBlockHeaderByHash with hash should return a block header with a matching height', () => {
     const opts = {
       hash: config.blockHash
     }
@@ -79,7 +41,7 @@ describe('RPCDaemon tests functions', function () {
     .to.eventually.have.keys('depth', 'difficulty', 'hash', 'height', 'major_version', 'minor_version', 'nonce', 'orphan_status', 'prev_hash', 'reward', 'timestamp')
     .to.eventually.have.property('height', config.blockHeight)
   })
-  xit('getBlockHeaderByHeight with height should return a block header with a matching hash', () => {
+  it('getBlockHeaderByHeight with height should return a block header with a matching hash', () => {
     const opts = {
       height: config.blockHeight
     }
@@ -88,7 +50,7 @@ describe('RPCDaemon tests functions', function () {
       .to.eventually.have.keys('depth', 'difficulty', 'hash', 'height', 'major_version', 'minor_version', 'nonce', 'orphan_status', 'prev_hash', 'reward', 'timestamp')
       .to.eventually.have.property('hash', config.blockHash)
   })
-  xit('get_alias_details should return alias', () => {
+  it('get_alias_details should return alias', () => {
     const opts = {
       alias: config.alias
     }
@@ -98,7 +60,7 @@ describe('RPCDaemon tests functions', function () {
     .to.eventually.have.property('alias_details')
     .to.eventually.have.keys('address', 'comment', 'tracking_key')
   })
-  xit('get_alias_by_address should return alias name by address.', () => {
+  it('get_alias_by_address should return alias name by address.', () => {
     const opts = {
       address: config.stagenetWalletAddress
     }
@@ -108,7 +70,7 @@ describe('RPCDaemon tests functions', function () {
     .to.eventually.have.property('alias_info')
     .to.eventually.have.keys('address', 'alias', 'comment', 'tracking_key')
   })
-  xit('get_alias_reward should return current reward that must be paid to register an alias name.', () => {
+  it('get_alias_reward should return current reward that must be paid to register an alias name.', () => {
     const opts = {
       alias: config.alias
     }
@@ -118,7 +80,7 @@ describe('RPCDaemon tests functions', function () {
     .to.eventually.have.property('reward')
     .to.eventually.equal(config.aliasFee)
   })
-  xit('get_blocks_details should return current reward that must be paid to register an alias name.', () => {
+  it('get_blocks_details should return current reward that must be paid to register an alias name.', () => {
     const opts = {
       height_start: 100,
       count: 1
@@ -129,7 +91,7 @@ describe('RPCDaemon tests functions', function () {
     .to.eventually.have.property('blocks')
     //.to.eventually.have.keys('actual_timestamp', 'already_generated_coins', 'base_reward', 'blob', 'block_cumulative_size', 'block_tself_size', 'cumulative_diff_adjusted', 'cumulative_diff_precise', 'difficulty', 'effective_fee_median', 'height', 'id', 'is_orphan','miner_text_info', 'object_in_json','penalty', 'pow_seed', 'prev_id', 'summary_reward','this_block_fee_median', 'timestamp', 'total_fee' ,'total_txs_size', 'transactions_details')
   })
-  xit('get_tx_details should  transaction details by specified transaction hash identifier.', () => {
+  it('get_tx_details should  transaction details by specified transaction hash identifier.', () => {
     const opts = {
       tx_hash: '07edca07b935b23fef3bee741e73f4b63772a600dd37823b0293266323d12b82'
     }
@@ -138,30 +100,14 @@ describe('RPCDaemon tests functions', function () {
     // .to.eventually.have.keys('')
     .to.eventually.have.property('tx_info')
   })
-  xit('search_by_id should  transaction details by specified transaction hash identifier.', () => {
+  it('search_by_id should  transaction details by specified transaction hash identifier.', () => {
     const opts = {
       id: '07edca07b935b23fef3bee741e73f4b63772a600dd37823b0293266323d12b82'
     }
     return expect(daemonClient.search_by_id(opts))
     .to.eventually.have.property('status', 'OK', 'types_found', ['tx'])
   })
-  // it('getBlockHeadersRange with heights should return block headers', () => {
-  //   const opts = {
-  //     start_height: config.blockHeight,
-  //     end_height: config.blockHeight + 1
-  //   }
-  //   return expect(daemonClient.getBlockHeadersRange(opts))
-  //     .to.eventually.have.property('headers')
-  // })
-  // it('getBlocksRange with heights should return blocks', () => {
-  //   const opts = {
-  //     start_height: config.blockHeight,
-  //     end_height: config.blockHeight + 1
-  //   }
-  //   return expect(daemonClient.getBlocksRange(opts))
-  //     .to.eventually.have.property('blocks')
-  // })
-  xit('getBlockTemplate should return status OK', () => {
+  it('getBlockTemplate should return status OK', () => {
     const opts = {
       wallet_address: config.stagenetWalletAddress,
       extra_text: 'foobar'
@@ -169,30 +115,14 @@ describe('RPCDaemon tests functions', function () {
     return expect(daemonClient.getBlockTemplate(opts))
       .to.eventually.have.property('status', 'OK')
   })
-  // it('getCoinbaseTxSum should return status OK', () => {
-  //   return expect(daemonClient.getCoinbaseTxSum({ height: 1, count: 100 }))
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('getConnections should retrieve information about connections', () => {
-  //   return expect(daemonClient.getConnections())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('getFeeEstimate should return OK', () => {
-  //   return expect(daemonClient.getFeeEstimate({ grace_blocks: 100 }))
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('getHardForkInfo should retrieve general informations', () => {
-  //   return expect(daemonClient.getHardForkInfo())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  xit('getInfo should Look up an output in the global outputs table by specified amount and output global index.', () => {
+  it('getInfo should Look up an output in the global outputs table by specified amount and output global index.', () => {
     const opts = {
       flags: 4294967295
     }
     return expect(daemonClient.getInfo(opts))
     .to.eventually.have.property('alias_count')
   })
-  xit('get_out_info should return various information and stats.', () => {
+  it('get_out_info should return various information and stats.', () => {
     const opts = {
       amount: 1000000000,
       i: 2
@@ -200,18 +130,18 @@ describe('RPCDaemon tests functions', function () {
     return expect(daemonClient.get_out_info(opts))
       .to.eventually.have.keys('out_no', 'tx_id', 'status')
   })
-  xit('get_multisig_info should return multisig output by specified identifier.', () => {
+  it('get_multisig_info should return multisig output by specified identifier.', () => {
     const opts = {
       ms_id: '5698B701F989214770C2CFF71166408C13D97E907AA4654781DC05E6994E59A5'
     }
     return expect(daemonClient.get_multisig_info(opts))
       .to.eventually.have.keys('out_no', 'tx_id', 'status')
   })
-  xit('get_all_alias_details should return all registered aliases.', () => {
+  it('get_all_alias_details should return all registered aliases.', () => {
     return expect(daemonClient.get_all_alias_details())
       .to.eventually.have.keys('aliases', 'status')
   })
-  xit('get_aliases should return a specified range of aliases from the global list.all registered aliases.', () => {
+  it('get_aliases should return a specified range of aliases from the global list.all registered aliases.', () => {
     const opts = {
       offset: 0,
       count: 2
@@ -219,81 +149,69 @@ describe('RPCDaemon tests functions', function () {
     return expect(daemonClient.get_aliases(opts))
       .to.eventually.have.keys('aliases', 'status')
   })
-  xit('get_pool_txs_details should transactions that are currently in the pool.', () => {
+  it('get_pool_txs_details should transactions that are currently in the pool.', () => {
     return expect(daemonClient.get_pool_txs_details())
       .to.eventually.have.keys('status')
   })
-  xit('get_pool_txs_brief_details should return brief information for transactions currently in the pool', () => {
+  it('get_pool_txs_brief_details should return brief information for transactions currently in the pool', () => {
     const opts = {
       ids: ['c99c2f9a53e4bab5d08f9820ee555d62059e0e9bf799fbe07a6137aac607f4e8']
     }
     return expect(daemonClient.get_pool_txs_brief_details(opts))
       .to.eventually.have.keys('status')
   })
-  xit('get_all_pool_tx_list should  return IDs for all txs in the pool.', () => {
+  it('get_all_pool_tx_list should  return IDs for all txs in the pool.', () => {
     return expect(daemonClient.get_all_pool_tx_list())
       .to.eventually.have.keys('status')
   })
-  xit('get_main_block_details should return block details for a specified identifier. Only for main chain blocks.', () => {
+  it('get_main_block_details should return block details for a specified identifier. Only for main chain blocks.', () => {
     const opts = {
       id: '5698B701F989214770C2CFF71166408C13D97E907AA4654781DC05E6994E59A5'
     }
-    return expect(daemonClient.get_main_block_detail(opts))
+    return expect(daemonClient.get_main_block_details(opts))
       .to.eventually.have.keys('block_details', 'status')
   })
-  xit('get_alt_block_detail should return block details for a specified identifier. Only for blocks in alternative chains.', () => {
+  it('get_alt_block_details should return block details for a specified identifier. Only for blocks in alternative chains.', () => {
     const opts = {
       id: '5698B701F989214770C2CFF71166408C13D97E907AA4654781DC05E6994E59A5'
-    }
-    return expect(daemonClient.get_alt_block_detail(opts))
-        .to.eventually.be.rejected
-        .and.be.an.instanceOf(Error)
-        .and.have.property('code', -14)
-  })
-  xit('get_alt_block_detail should return block details for a specified identifier. Only for blocks in alternative chains.', () => {
-    expect(1).to.equal(2, 'implement happy day path')
-  })
-  xit('get_alt_block_details should return alternative blocks details for a specified range.', () => {
-    const opts = {
-      offset: 0,
-      count: 2
     }
     return expect(daemonClient.get_alt_block_details(opts))
         .to.eventually.be.rejected
         .and.be.an.instanceOf(Error)
         .and.have.property('code', -14)
   })
-  xit('get_alt_block_details should return alternative blocks details for a specified range.', () => {
+  it('get_alt_blocks_details should return alternative blocks details for a specified range.', () => {
     const opts = {
       offset: 0,
       count: 2
     }
-    expect(1).to.equal(2, 'implement happy day path')
+    return expect(daemonClient.get_alt_blocks_details(opts))
+    .to.eventually.have.property('status', 'OK')
   })
-  xit('reset_transaction_pool should Clear the transaction pool.', () => {
+  it('reset_transaction_pool should Clear the transaction pool.', () => {
     return expect(daemonClient.reset_transaction_pool())
       .to.eventually.have.property('status', 'OK')
   })
-  xit('get_current_core_tx_expiration_median should return the median for timestamps of the last 20 blocks. Displayed as returned median value plus 600 seconds, this is used to check the expiration time of parameters.', () => {
+  it('get_current_core_tx_expiration_median should return the median for timestamps of the last 20 blocks. Displayed as returned median value plus 600 seconds, this is used to check the expiration time of parameters.', () => {
     return expect(daemonClient.get_current_core_tx_expiration_median())
       .to.eventually.have.property('status', 'OK')
   })
-  xit('marketplace_global_get_offers_ex should return global market place offers.', () => {
+  it('marketplace_global_get_offers_ex should return global market place offers.', () => {
     return expect(daemonClient.marketplace_global_get_offers_ex())
       .to.eventually.have.property('status', 'OK')
   })
-  xit('getheight should return the current blockchain height.', () => {
+  it('getheight should return the current blockchain height.', () => {
     return expect(daemonClient.getheight())
       .to.eventually.has.keys('height', 'status')
   })
-  xit('gettransactions should return transactions in serialized binary form by specified tx IDs.', () => {
+  it('gettransactions should return transactions in serialized binary form by specified tx IDs.', () => {
     const opts = {
       txs_hashes: ['809f9656da9d0681ed6ae3c51d544834962750cc46d4c175ed32531c2fa293af']
     }
     return expect(daemonClient.gettransactions(opts))
       .to.eventually.has.keys('status')
   })
-  xit('sendrawtransaction should return send raw transaction (i.e., fully constructed and serialized beforehand) to the network.', () => {
+  it('sendrawtransaction should return send raw transaction (i.e., fully constructed and serialized beforehand) to the network.', () => {
     const opts = {
       tx_as_text: '809f9656da9d0681ed6ae3c51d544834962750cc46d4c175ed32531c2fa293af'
     }
@@ -307,170 +225,74 @@ describe('RPCDaemon tests functions', function () {
     return expect(daemonClient.force_relay(opts))
       .to.eventually.has.keys('status')
   })
-  xit('getLastBlockHeader should return a block header', () => {
+  it('start_mining should start mining in daemon.', () => {
+    const opts = {
+      miner_address: config.stagenetWalletAddress,
+      thread_count: 1
+    }
+    return expect(daemonClient.start_mining(opts))
+      .to.eventually.has.keys('status')
+  })
+  it('stop_mining should stop mining in daemon.', () => {
+    return expect(daemonClient.stop_mining())
+      .to.eventually.has.keys('status')
+  })
+  it('getInfoLegacy should return various information and stats.', () => {
+    return expect(daemonClient.getInfoLegacy())
+      .to.eventually.have.keys('alias_count', 
+                              'alt_blocks_count', 
+                              'block_reward', 
+                              'current_blocks_median',
+                              'current_max_allowed_block_size', 
+                              'current_network_hashrate_350', 
+                              'current_network_hashrate_50', 
+                              'daemon_network_state', 
+                              'default_fee', 
+                              'expiration_median_timestamp', 
+                              'grey_peerlist_size', 
+                              'height', 
+                              'incoming_connections_count', 
+                              'last_block_hash', 
+                              'last_block_size', 
+                              'last_block_timestamp', 
+                              'last_block_total_reward',
+                              'last_pos_timestamp',
+                              'last_pow_timestamp', 
+                              'max_net_seen_height', 
+                              'mi', 
+                              'minimum_fee', 
+                              'net_time_delta_median', 
+                              'offers_count', 
+                              'outgoing_connections_count', 
+                              'outs_stat', 
+                              'performance_data', 
+                              'pos_allowed', 
+                              'pos_block_ts_shift_vs_actual', 
+                              'pos_diff_total_coins_rate', 
+                              'pos_difficulty', 
+                              'pos_sequence_factor', 
+                              'pow_difficulty', 
+                              'pow_sequence_factor', 
+                              'seconds_for_10_blocks', 
+                              'seconds_for_30_blocks', 
+                              'status', 
+                              'synchronization_start_height', 
+                              'synchronized_connections_count',
+                              'total_coins',
+                              'transactions_cnt_per_day',
+                              'transactions_volume_per_day',
+                              'tx_count', 
+                              'tx_count_in_last_block',
+                              'tx_pool_performance_data',
+                              'tx_pool_size',
+                              'white_peerlist_size')
+  })
+  it('getLastBlockHeader should return a block header', () => {
     return expect(daemonClient.getLastBlockHeader())
     .to.eventually.have.property('block_header')
     .to.eventually.have.keys('depth', 'difficulty', 'hash', 'height', 'major_version', 'minor_version', 'nonce', 'orphan_status', 'prev_hash', 'reward', 'timestamp')
   })
-  // it('getOutputDistribution should return OK', () => {
-  //   const opts = {
-  //     amounts: [100000],
-  //     cumulative: true,
-  //     from_height: 1,
-  //     to_height: 100
-  //   }
-  //   return expect(daemonClient.getOutputDistribution(opts))
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('getOutputHistogram should return status OK', () => {
-  //   const opts = {
-  //     amounts: [100000],
-  //     min_count: 1,
-  //     max_count: 100,
-  //     unlocked: true,
-  //     recent_cutoff: 100
-  //   }
-  //   return expect(daemonClient.getOutputHistogram(opts))
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('getVersion should return OK', () => {
-  //   return expect(daemonClient.getVersion())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherGetAltBlocksHashes should return OK', () => {
-  //   return expect(daemonClient.otherGetAltBlocksHashes())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherGetHeight should return OK', () => {
-  //   return expect(daemonClient.otherGetHeight())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherSetLimit should return OK', () => {
-  //   const opts = {
-  //     limit_up: 4096,
-  //     limit_down: 8192
-  //   }
-  //   return expect(daemonClient.otherSetLimit(opts))
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherGetLimit should return correct limit_down', () => {
-  //   return expect(daemonClient.otherGetLimit())
-  //     .to.eventually.have.property('limit_down', 8192)
-  // })
-  // it('otherGetPeerList status should return OK', () => {
-  //   return expect(daemonClient.otherGetPeerList())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherGetTransactionPool should return OK', () => {
-  //   return expect(daemonClient.otherGetTransactionPool())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherGetTransactionPoolStats should return OK', () => {
-  //   return expect(daemonClient.otherGetTransactionPoolStats())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherGetTransactions should return the whole transaction', () => {
-  //   const opts = {
-  //     txs_hashes: [config.txids[0]],
-  //     decode_as_json: true,
-  //     prune: true
-  //   }
-  //   return expect(daemonClient.otherGetTransactions(opts))
-  //     .to.eventually.have.nested.property('txs[0].block_height', 17835)
-  // })
-  // it('otherIsKeyImageSpent should return 1', () => {
-  //   const opts = {
-  //     key_images: [config.spent_key]
-  //   }
-  //   return expect(daemonClient.otherIsKeyImageSpent(opts))
-  //     .to.eventually.have.nested.property('spent_status[0]', 1)
-  // })
-  // it('otherOutPeers should return OK', () => {
-  //   const opts = {
-  //     out_peers: 3232235535
-  //   }
-  //   return expect(daemonClient.otherOutPeers(opts))
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherInPeers should return OK', () => {
-  //   const opts = {
-  //     in_peers: 3232235535
-  //   }
-  //   return expect(daemonClient.otherInPeers(opts))
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherSaveBc blockchain status should return OK', () => {
-  //   return expect(daemonClient.otherSaveBc())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherSendRawTransaction with tx_as_hex should return OK', () => {
-  //   let opts = {
-  //     txs_hashes: [config.txids[0]]
-  //   }
-  //   return daemonClient.otherGetTransactions(opts).then((result) => {
-  //     const txHex = result.txs_as_hex['0']
-  //     opts = {
-  //       tx_as_hex: txHex,
-  //       do_not_relay: false
-  //     }
-  //     return expect(daemonClient.otherSendRawTransaction(opts))
-  //       .to.eventually.have.property('status', 'OK')
-  //   })
-  // })
-  // it('otherSetLogCategories without parameter status should return OK', () => {
-  //   return expect(daemonClient.otherSetLogCategories())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherSetLogCategories with parameter should return parameter value', () => {
-  //   const opts = {
-  //     categories: '*:INFO'
-  //   }
-  //   return expect(daemonClient.otherSetLogCategories(opts))
-  //     .to.eventually.have.property('categories', '*:INFO')
-  // })
-  // it('otherSetLogHashrate when not mining should be rejected', () => {
-  //   const opts = {
-  //     visible: true
-  //   }
-  //   return expect(daemonClient.otherSetLogHashrate(opts))
-  //     .to.eventually.be.rejected
-  //     .and.be.an.instanceOf(Error, 'NOT MINING')
-  // })
-  // it('otherSetLogLevel status should return OK', () => {
-  //   const opts = {
-  //     level: 1
-  //   }
-  //   return expect(daemonClient.otherSetLogLevel(opts))
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherStartMining should return OK', () => {
-  //   const opts = {
-  //     do_background_mining: true,
-  //     ignore_battery: true,
-  //     miner_address: config.stagenetWalletAddress,
-  //     threads_count: 1
-  //   }
-  //   return expect(daemonClient.otherStartMining(opts))
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherMiningStatus should return OK', () => {
-  //   return expect(daemonClient.otherMiningStatus())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherStopMining should return OK', () => {
-  //   return expect(daemonClient.otherStopMining())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('relayTx should be rejected', () => {
-  //   const opts = {
-  //     txids: config.txids
-  //   }
-  //   return expect(daemonClient.relayTx(opts))
-  //     .to.eventually.be.rejected
-  //     .and.be.an.instanceOf(Error)
-  //     .and.have.property('code', 0)
-  // })
-  xit('submitBlock with a blob should be rejected', () => {
+  it('submitBlock with a blob should be rejected', () => {
     const opts = {
       blobs: ['0707e6bdfedc053771512f1bc27c62731ae9e8f2443db64ce742f4e57f5cf8d393de28551e441a0000000002fb830a01ffbf830a018cfe88bee283060274c0aae2ef5730e680308d9c00b6da59187ad0352efe3c71d36eeeb28782f29f2501bd56b952c3ddc3e350c2631d3a5086cac172c56893831228b17de296ff4669de020200000000']
     }
@@ -479,12 +301,4 @@ describe('RPCDaemon tests functions', function () {
       .and.be.an.instanceOf(Error)
       .and.have.property('code', -6)
   })
-  // it('syncInfo should return OK', () => {
-  //   return expect(daemonClient.syncInfo())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
-  // it('otherStopDaemon should return OK', () => {
-  //   return expect(daemonClient.otherStopDaemon())
-  //     .to.eventually.have.property('status', 'OK')
-  // })
 })

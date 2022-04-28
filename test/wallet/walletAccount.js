@@ -39,7 +39,7 @@ describe('RPCWallet wallet account functions', function () {
       .to.eventually.have.property('pi')
       .that.eventually.have.keys('balance', 'curent_height', 'transfer_entries_count', 'transfers_count', 'unlocked_balance')
   })
-  xit('transfer', () => {
+  it('transfer', () => {
     return expect(walletClient.transfer({ destinations: [{amount: 1, address: 'ZxBj1cQSiCfhQKHvZF8nFtM6dgEn2htg66p3Z9BUhVNmivASMwhX2dbN52gMLq9CKs38vTwMRJccRA4MeLqrQEGg1bWpjgQfQ'}], mixin: 1, fee: 10000000000, comment: 'woot woot'}))
       .to.eventually.have.keys('tx_hash', 'tx_unsigned_hex', 'tx_size')
   })
@@ -47,11 +47,11 @@ describe('RPCWallet wallet account functions', function () {
     return expect(walletClient.store())
       .to.eventually.have.keys('wallet_file_size')
   })
-  xit('getPayments', () => {
+  it('getPayments', () => {
     return expect(walletClient.getPayments({ payment_id: config.payment_id }))
       .to.eventually.have.nested.property('payments[0].payment_id')
   })
-  xit('getBulkPayments', () => {
+  it('getBulkPayments', () => {
     return expect(walletClient.getBulkPayments({ payment_ids: [config.payment_id], min_block_height: 1 }))
       .to.eventually.have.nested.property('payments[0].payment_id')
   })
@@ -63,15 +63,15 @@ describe('RPCWallet wallet account functions', function () {
     return expect(walletClient.splitIntegratedAddress({ integrated_address: config.stagenetWalletIntegratedAddressA }))
       .to.eventually.have.property('payment_id', config.payment_id)
   })
-  xit('sweep_below', () => {
+  it('sweep_below', () => {
     return expect(walletClient.sweepBelow({ address: config.stagenetWalletIntegratedAddressA, mixin: 1, fee: 10000000000 }))
       .to.eventually.have.keys('tx_hash', 'tx_unsigned_hex', 'outs_total', 'outs_swept', 'amount_swept')
   })
-  xit('sign_transfer', () => {
+  it('sign_transfer', () => {
     return expect(walletClient.signTransfer({ tx_unsigned_hex: ''}))
       .to.eventually.have.keys('tx_signed_hex', 'tx_hash')
   })
-  xit('submit_transfer', () => {
+  it('submit_transfer', () => {
     return expect(walletClient.submitTransfer({ tx_signed_hex: ''}))
       .to.eventually.have.keys('tx_hash')
   })
@@ -84,11 +84,11 @@ describe('RPCWallet wallet account functions', function () {
       .to.eventually.have.keys('hash_sum_matched', 'require_password', 'syntax_correct', 'tracking')
   })
 
-  xit('contracts_send_proposal', () => {
+  it('contracts_send_proposal', () => {
     return expect(walletClient.contractsSendProposal())
       .to.eventually.be.an('object').that.is.empty
   })
-  xit('contracts_accept_proposal', () => {
+  it('contracts_accept_proposal', () => {
     return expect(walletClient.contractsAcceptProposal())
       .to.eventually.be.an('object').that.is.empty
   })
@@ -96,51 +96,51 @@ describe('RPCWallet wallet account functions', function () {
     return expect(walletClient.contractsGetAll())
       .to.eventually.be.an('object').that.is.empty
   })
-  xit('contracts_release', () => {
+  it('contracts_release', () => {
     return expect(walletClient.contractsRelease({contract_id: '', release_type: ''}))
       .to.eventually.be.an('object').that.is.empty
   })
-  xit('contracts_request_cancel', () => {
+  it('contracts_request_cancel', () => {
     return expect(walletClient.contractsRequestCancel({contract_id: '', expiration_period: 1, fee: 10000000000}))
       .to.eventually.be.an('object').that.is.empty
   })
-  xit('contracts_accept_cancel', () => {
+  it('contracts_accept_cancel', () => {
     return expect(walletClient.contractsAcceptCancel({contract_id: ''}))
       .to.eventually.be.an('object').that.is.empty
   })
-  xit('marketplace_get_offers_ex', () => {
+  it('marketplace_get_offers_ex', () => {
     return expect(walletClient.marketplaceGetOffersEx({}))
       .to.eventually.have.keys('tx_hash', 'tx_blob_size')
   })
-  xit('marketplace_push_offer', () => {
+  it('marketplace_push_offer', () => {
     return expect(walletClient.marketplacePushOffer({}))
       .to.eventually.have.keys('tx_hash', 'tx_blob_size')
   })
-  xit('marketplace_push_update_offer', () => {
+  it('marketplace_push_update_offer', () => {
     return expect(walletClient.marketplacePushUpdateOffer({}))
       .to.eventually.have.keys('tx_hash', 'tx_blob_size')
   })
-  xit('marketplace_cancel_offer', () => {
+  it('marketplace_cancel_offer', () => {
     return expect(walletClient.marketplaceCancelOffer({}))
       .to.eventually.have.keys('tx_hash', 'tx_blob_size')
   })
 
-  xit('atomics_create_htlc_proposal', () => {
+  it('atomics_create_htlc_proposal', () => {
     return expect(walletClient.atomicsCreateHtlcProposal({}))
       .to.eventually.have.keys('result_tx_blob', 'result_tx_id', 'derived_origin_secret')
   })
-  xit('atomics_get_list_of_active_htlc', () => {
+  it('atomics_get_list_of_active_htlc', () => {
     return expect(walletClient.atomicsGetListOfActiveHtlc({}))
       .to.eventually.have.property('htlcs')
       .to.eventually.have.keys('counterparty_address', 'sha256_hash', 'tx_id', 'amount', 'is_redeem')
       .to.eventually.have.property('counterparty_address')
       .that.eventually.have.keys('spend_public_key', 'view_public_key')
   })
-  xit('atomics_redeem_htlc', ({}) => {
+  it('atomics_redeem_htlc', ({}) => {
     return expect(walletClient.atomicsRedeemHtlc({}))
       .to.eventually.have.keys('result_tx_blob', 'result_tx_id')
   })
-  xit('atomics_check_htlc_redeemed', ({}) => {
+  it('atomics_check_htlc_redeemed', ({}) => {
     return expect(walletClient.atomicsCheckHtlcRedeemed({}))
       .to.eventually.have.keys('origin_secrete', 'redeem_tx_id')
   })
