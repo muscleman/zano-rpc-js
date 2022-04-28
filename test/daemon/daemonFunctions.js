@@ -138,7 +138,7 @@ describe('RPCDaemon tests functions', function () {
     // .to.eventually.have.keys('')
     .to.eventually.have.property('tx_info')
   })
-  it('search_by_id should  transaction details by specified transaction hash identifier.', () => {
+  xit('search_by_id should  transaction details by specified transaction hash identifier.', () => {
     const opts = {
       id: '07edca07b935b23fef3bee741e73f4b63772a600dd37823b0293266323d12b82'
     }
@@ -185,12 +185,127 @@ describe('RPCDaemon tests functions', function () {
   //   return expect(daemonClient.getHardForkInfo())
   //     .to.eventually.have.property('status', 'OK')
   // })
-  it('getInfo should return various information and stats.', () => {
+  xit('getInfo should Look up an output in the global outputs table by specified amount and output global index.', () => {
     const opts = {
       flags: 4294967295
     }
     return expect(daemonClient.getInfo(opts))
-      .to.eventually.have.property('alias_count')
+    .to.eventually.have.property('alias_count')
+  })
+  xit('get_out_info should return various information and stats.', () => {
+    const opts = {
+      amount: 1000000000,
+      i: 2
+    }
+    return expect(daemonClient.get_out_info(opts))
+      .to.eventually.have.keys('out_no', 'tx_id', 'status')
+  })
+  xit('get_multisig_info should return multisig output by specified identifier.', () => {
+    const opts = {
+      ms_id: '5698B701F989214770C2CFF71166408C13D97E907AA4654781DC05E6994E59A5'
+    }
+    return expect(daemonClient.get_multisig_info(opts))
+      .to.eventually.have.keys('out_no', 'tx_id', 'status')
+  })
+  xit('get_all_alias_details should return all registered aliases.', () => {
+    return expect(daemonClient.get_all_alias_details())
+      .to.eventually.have.keys('aliases', 'status')
+  })
+  xit('get_aliases should return a specified range of aliases from the global list.all registered aliases.', () => {
+    const opts = {
+      offset: 0,
+      count: 2
+    }
+    return expect(daemonClient.get_aliases(opts))
+      .to.eventually.have.keys('aliases', 'status')
+  })
+  xit('get_pool_txs_details should transactions that are currently in the pool.', () => {
+    return expect(daemonClient.get_pool_txs_details())
+      .to.eventually.have.keys('status')
+  })
+  xit('get_pool_txs_brief_details should return brief information for transactions currently in the pool', () => {
+    const opts = {
+      ids: ['c99c2f9a53e4bab5d08f9820ee555d62059e0e9bf799fbe07a6137aac607f4e8']
+    }
+    return expect(daemonClient.get_pool_txs_brief_details(opts))
+      .to.eventually.have.keys('status')
+  })
+  xit('get_all_pool_tx_list should  return IDs for all txs in the pool.', () => {
+    return expect(daemonClient.get_all_pool_tx_list())
+      .to.eventually.have.keys('status')
+  })
+  xit('get_main_block_details should return block details for a specified identifier. Only for main chain blocks.', () => {
+    const opts = {
+      id: '5698B701F989214770C2CFF71166408C13D97E907AA4654781DC05E6994E59A5'
+    }
+    return expect(daemonClient.get_main_block_detail(opts))
+      .to.eventually.have.keys('block_details', 'status')
+  })
+  xit('get_alt_block_detail should return block details for a specified identifier. Only for blocks in alternative chains.', () => {
+    const opts = {
+      id: '5698B701F989214770C2CFF71166408C13D97E907AA4654781DC05E6994E59A5'
+    }
+    return expect(daemonClient.get_alt_block_detail(opts))
+        .to.eventually.be.rejected
+        .and.be.an.instanceOf(Error)
+        .and.have.property('code', -14)
+  })
+  xit('get_alt_block_detail should return block details for a specified identifier. Only for blocks in alternative chains.', () => {
+    expect(1).to.equal(2, 'implement happy day path')
+  })
+  xit('get_alt_block_details should return alternative blocks details for a specified range.', () => {
+    const opts = {
+      offset: 0,
+      count: 2
+    }
+    return expect(daemonClient.get_alt_block_details(opts))
+        .to.eventually.be.rejected
+        .and.be.an.instanceOf(Error)
+        .and.have.property('code', -14)
+  })
+  xit('get_alt_block_details should return alternative blocks details for a specified range.', () => {
+    const opts = {
+      offset: 0,
+      count: 2
+    }
+    expect(1).to.equal(2, 'implement happy day path')
+  })
+  xit('reset_transaction_pool should Clear the transaction pool.', () => {
+    return expect(daemonClient.reset_transaction_pool())
+      .to.eventually.have.property('status', 'OK')
+  })
+  xit('get_current_core_tx_expiration_median should return the median for timestamps of the last 20 blocks. Displayed as returned median value plus 600 seconds, this is used to check the expiration time of parameters.', () => {
+    return expect(daemonClient.get_current_core_tx_expiration_median())
+      .to.eventually.have.property('status', 'OK')
+  })
+  xit('marketplace_global_get_offers_ex should return global market place offers.', () => {
+    return expect(daemonClient.marketplace_global_get_offers_ex())
+      .to.eventually.have.property('status', 'OK')
+  })
+  xit('getheight should return the current blockchain height.', () => {
+    return expect(daemonClient.getheight())
+      .to.eventually.has.keys('height', 'status')
+  })
+  xit('gettransactions should return transactions in serialized binary form by specified tx IDs.', () => {
+    const opts = {
+      txs_hashes: ['809f9656da9d0681ed6ae3c51d544834962750cc46d4c175ed32531c2fa293af']
+    }
+    return expect(daemonClient.gettransactions(opts))
+      .to.eventually.has.keys('status')
+  })
+  xit('sendrawtransaction should return send raw transaction (i.e., fully constructed and serialized beforehand) to the network.', () => {
+    const opts = {
+      tx_as_text: '809f9656da9d0681ed6ae3c51d544834962750cc46d4c175ed32531c2fa293af'
+    }
+    return expect(daemonClient.sendrawtransaction(opts))
+      .to.eventually.has.keys('status')
+  })
+  it('force_relay should return broadcast specified transactions across the network.', () => {
+    const opts = {
+      tx_as_hex: ['809f9656da9d0681ed6ae3c51d544834962750cc46d4c175ed32531c2fa293af']
+    }
+    return expect(daemonClient.force_relay(opts))
+      .to.eventually.has.keys('status')
   })
   xit('getLastBlockHeader should return a block header', () => {
     return expect(daemonClient.getLastBlockHeader())
@@ -355,7 +470,7 @@ describe('RPCDaemon tests functions', function () {
   //     .and.be.an.instanceOf(Error)
   //     .and.have.property('code', 0)
   // })
-  it('submitBlock with a blob should be rejected', () => {
+  xit('submitBlock with a blob should be rejected', () => {
     const opts = {
       blobs: ['0707e6bdfedc053771512f1bc27c62731ae9e8f2443db64ce742f4e57f5cf8d393de28551e441a0000000002fb830a01ffbf830a018cfe88bee283060274c0aae2ef5730e680308d9c00b6da59187ad0352efe3c71d36eeeb28782f29f2501bd56b952c3ddc3e350c2631d3a5086cac172c56893831228b17de296ff4669de020200000000']
     }
