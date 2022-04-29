@@ -16,6 +16,12 @@ console.log(FgWhite + BgBlack + 'Use ' + FgGreen + 'npm run' + FgWhite + BgBlack
 console.log(BgBlack + FgGreen + 'test-http-digest' + FgWhite + BgBlack + ' to test ' + FgYellow + 'HTTPDigest library' + Reset)
 console.log(BgBlack + FgGreen + 'test-daemon-functions' + FgWhite + BgBlack + ' to test ' + FgYellow + 'RPCDaemon library' + Reset)
 console.log(BgBlack + FgGreen + 'test-wallet-account' + FgWhite + BgBlack + ' to test ' + FgYellow + 'RPCWallet account functions' + Reset)
+
+console.log(BgBlack + FgGreen + 'test-wallet-contract' + FgWhite + BgBlack + ' to test ' + FgYellow + 'RPCWallet contract functions' + Reset)
+console.log(BgBlack + FgGreen + 'test-wallet-market-place' + FgWhite + BgBlack + ' to test ' + FgYellow + 'RPCWallet marketplace functions' + Reset)
+console.log(BgBlack + FgGreen + 'test-wallet-atomics' + FgWhite + BgBlack + ' to test ' + FgYellow + 'RPCWallet atomics functions' + Reset)
+console.log(BgBlack + FgGreen + 'test-cold-signing' + FgWhite + BgBlack + ' to test ' + FgYellow + 'RPCWallet cold signing functions' + Reset)
+
 console.log(BgBlack + FgGreen + 'test-helper-checkmandatory-parameters' + FgWhite + BgBlack + ' to test ' + FgYellow + 'RPCHelpers validate mandatory parameters' + Reset)
 console.log(BgBlack + FgGreen + 'test-helper-checkoptional-parameters' + FgWhite + BgBlack + ' to test ' + FgYellow + 'RPCHelpers validate optional parameters' + Reset)
 console.log(BgBlack + FgGreen + 'generate-docs' + FgWhite + BgBlack + ' to generate ' + FgYellow + 'the docs' + Reset)

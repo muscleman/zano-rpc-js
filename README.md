@@ -82,3 +82,33 @@ npm run generate-docs
 ```
 npm test
 ```
+
+## Cold Signing Tests
+1. Use Console to restore a testnet wallet from seed
+```
+./simplewallet --restore-wallet muscleman.restored --password 123456 
+```
+2. when instructed provide the following seed phrase
+```
+coffee rest stand said leg muse defense wild about mighty horse melt really hum sharp seek honest brush depress beyond hundred silly confusion inhale birthday frozen
+```
+3. when instructed provide the following password for the secured seed
+```
+123456
+```
+4. Use Simplewallet console execute the following to save a watch_only wallet
+```
+save_watch_only muscleman.watch 123456
+```
+5. Use Console execute following to open watch_only wallet as a service
+```
+screen -S watchonlywallet ./simplewallet --wallet-file muscleman.watch --password 123456 --rpc-bind-ip 10.0.0.13 --rpc-bind-port 12234 --daemon-address 10.0.0.13:12111
+```
+6. Use Console execute following to open normal wallet as a service
+```
+screen -S regularwallet ./simplewallet --wallet-file muscleman.test --password 123456 --rpc-bind-ip 10.0.0.13 --rpc-bind-port 12233 --daemon-address 10.0.0.13:12111
+```
+7. Run the cold-signing tests
+```
+npm run test-wallet-cold-signing
+```
