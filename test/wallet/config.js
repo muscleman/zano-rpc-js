@@ -13,5 +13,6 @@ exports = module.exports = {
   payment_id: '8ca523f5e9506fed',
   txids: ['4a89327a4b9bf93d902646f94ee04b0fb0c5e11f19a47429b38df853c3246d3b', '6833e0d829ea5aa454d455142301eb71e7635c09527842b2ca501cf613a4d3d4'],
   stagenetWalletIntegratedAddressA: 'iZ1D8uVznFyhQKHvZF8nFtM6dgEn2htg66p3Z9BUhVNmivASMwhX2dbN52gMLq9CKs38vTwMRJccRA4MeLqrQEGgCbQFxcMALdu1xjgxYHxs',
+  units: 1000000000
 
 }
