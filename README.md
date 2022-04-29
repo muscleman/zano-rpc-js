@@ -92,7 +92,7 @@ npm test
 ```
 screen -S regularwallet ./simplewallet --wallet-file muscleman.test --password 123456 --rpc-bind-ip 10.0.0.13 --rpc-bind-port 12233 --daemon-address 10.0.0.13:12111
 ```
-3. Run the cold-signing tests
+3. Run the wallet tests
 ```
 npm run test-wallet-account
 ```
