@@ -40,7 +40,7 @@ describe('RPCWallet wallet account functions', function () {
       .that.eventually.have.keys('balance', 'curent_height', 'transfer_entries_count', 'transfers_count', 'unlocked_balance')
   })
   xit('transfer', () => {
-    let opts = { destinations: [{amount: 1 * config.units, address: config.stagenetWalletAddressA}], mixin: 1, fee: 10000000000, comment: 'woot woot'}
+    let opts = { destinations: [{amount: 1 * config.units, address: config.integratedTestAddressB}], payment_id: config.payment_id, mixin: 1, fee: 10000000000, comment: 'woot woot'}
     return expect(walletClient.transfer(opts))
       .to.eventually.have.keys('tx_hash', 'tx_unsigned_hex', 'tx_size')
   })
@@ -48,7 +48,7 @@ describe('RPCWallet wallet account functions', function () {
     return expect(walletClient.store())
       .to.eventually.have.keys('wallet_file_size')
   })
-  it('getPayments', () => {
+  xit('getPayments', () => {
     return expect(walletClient.getPayments({ payment_id: config.payment_id }))
       .to.eventually.have.nested.property('payments[0].payment_id')
   })
@@ -58,16 +58,16 @@ describe('RPCWallet wallet account functions', function () {
   })
   xit('make_integrated_address', () => {
     return expect(walletClient.makeIntegratedAddress({ payment_id: config.payment_id }))
-      .to.eventually.have.property('integrated_address', config.stagenetWalletIntegratedAddressA)
+      .to.eventually.have.property('integrated_address', config.integratedTestAddressA)
   })
   xit('splitIntegratedAddress', () => {
-    return expect(walletClient.splitIntegratedAddress({ integrated_address: config.stagenetWalletIntegratedAddressA }))
+    return expect(walletClient.splitIntegratedAddress({ integrated_address: config.integratedTestAddressA }))
       .to.eventually.have.property('payment_id', config.payment_id)
   })
-  xit('sweep_below', () => {
-    return expect(walletClient.sweepBelow({ address: config.stagenetWalletIntegratedAddressA, mixin: 1, fee: 10000000000 }))
-      .to.eventually.have.keys('tx_hash', 'tx_unsigned_hex', 'outs_total', 'outs_swept', 'amount_swept')
-  })
+  // it('sweep_below', () => {
+  //   return expect(walletClient.sweepBelow({ address: config.integratedTestAddressA, mixin: 1, fee: 10000000000 }))
+  //     .to.eventually.have.keys('tx_hash', 'tx_unsigned_hex', 'outs_total', 'outs_swept', 'amount_swept')
+  // })
   xit('sign_transfer', () => {
     return expect(walletClient.signTransfer({ tx_unsigned_hex: ''}))
       .to.eventually.have.keys('tx_signed_hex', 'tx_hash')
@@ -78,39 +78,73 @@ describe('RPCWallet wallet account functions', function () {
   })
   xit('get_restore_info', () => {
     return expect(walletClient.getRestoreInfo({ seed_password: '123456'}))
-      .to.eventually.have.property('seed_phrase', config.stagenetSeedA)
+      .to.eventually.have.property('seed_phrase', config.testNetSeedA)
   })
   xit('get_seed_phrase_info', () => {
-    return expect(walletClient.getSeedPhraseInfo({seed_phrase: config.stagenetSeedA, seed_password: '123456'}))
+    return expect(walletClient.getSeedPhraseInfo({seed_phrase: config.testNetSeedA, seed_password: '123456'}))
       .to.eventually.have.keys('hash_sum_matched', 'require_password', 'syntax_correct', 'tracking')
   })
 
   xit('contracts_send_proposal', () => {
-    return expect(walletClient.contractsSendProposal())
+    const opts = {
+      details: {
+                title: 'foobar',
+                comment: 'testproposal',
+                a_addr: config.integratedTestAddressB
+              },
+      payment_id: config.payment_id,
+      expiration_period: 5,
+      fee: config.fee,
+      b_fee: config.fee,
+      fake_outputs_count: 1,
+      unlock_time: 0
+    }
+    return expect(walletClient.contractsSendProposal(opts))
       .to.eventually.be.an('object').that.is.empty
   })
   xit('contracts_accept_proposal', () => {
-    return expect(walletClient.contractsAcceptProposal())
+    const opts = {
+      contract_id: '',
+      acceptance_fee: 1
+    }
+    return expect(walletClient.contractsAcceptProposal(opts))
       .to.eventually.be.an('object').that.is.empty
   })
-  xit('contracts_get_all', () => {
+  it('contracts_get_all', () => {
     return expect(walletClient.contractsGetAll())
       .to.eventually.be.an('object').that.is.empty
   })
   xit('contracts_release', () => {
-    return expect(walletClient.contractsRelease({contract_id: '', release_type: ''}))
+    const opts = {
+      contract_id: '', 
+      release_type: ''
+    }
+    return expect(walletClient.contractsRelease(opts))
       .to.eventually.be.an('object').that.is.empty
   })
   xit('contracts_request_cancel', () => {
-    return expect(walletClient.contractsRequestCancel({contract_id: '', expiration_period: 1, fee: 10000000000}))
+    const opts = {
+      contract_id: '', 
+      expiration_period: 1, 
+      fee: 10000000000
+    }
+    return expect(walletClient.contractsRequestCancel(opts))
       .to.eventually.be.an('object').that.is.empty
   })
   xit('contracts_accept_cancel', () => {
-    return expect(walletClient.contractsAcceptCancel({contract_id: ''}))
+    const opts = {
+      contract_id: ''
+    }
+    return expect(walletClient.contractsAcceptCancel(opts))
       .to.eventually.be.an('object').that.is.empty
   })
   xit('marketplace_get_offers_ex', () => {
-    return expect(walletClient.marketplaceGetOffersEx({}))
+    const opts = {
+      od: {
+
+      }
+    }
+    return expect(walletClient.marketplaceGetOffersEx(opts))
       .to.eventually.have.keys('tx_hash', 'tx_blob_size')
   })
   xit('marketplace_push_offer', () => {
