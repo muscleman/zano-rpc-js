@@ -86,7 +86,7 @@ npm test
 ## Cold Signing Tests
 1. Use Console to restore a testnet wallet from seed
 ```
-./simplewallet --restore-wallet muscleman.restored --password 123456 
+./simplewallet --restore-wallet muscleman.test --password 123456 
 ```
 2. when instructed provide the following seed phrase
 ```
