@@ -25,7 +25,7 @@
     "test-daemon-functions": "mocha -t 60000 ./test/daemon/daemonFunctions.js",
     "test-wallet-account": "mocha -t 60000 ./test/wallet/walletAccount.js",
     "test-wallet-contracts": "mocha -t 60000 ./test/wallet/walletContracts.js",
-    "test-wallet-market-place": "mocha -t 300000 ./test/wallet/walletMarketPlace.js",
+    "test-wallet-market-place": "mocha -t 600000 ./test/wallet/walletMarketPlace.js",
     "test-wallet-atomics": "mocha -t 60000 ./test/wallet/walletAtomics.js",
     "test-wallet-cold-signing": "mocha -t 60000 ./test/wallet/walletColdSigning.js",
     "test-helper-checkmandatory-parameters": "mocha -t 6000 ./test/helper/checkMandatoryParameters.js",

@@ -83,6 +83,21 @@ npm run generate-docs
 npm test
 ```
 
+## MarketPlace Tests
+***NOTE: tests can take several minutes to complete while block confirmations occur***
+1. Use Console to restore a testnet wallet from seed
+```
+./simplewallet --restore-wallet muscleman.test --password 123456 
+```
+2. Use Console execute following to open normal wallet as a service with screen
+```
+screen -S regularwallet ./simplewallet --wallet-file muscleman.test --password 123456 --rpc-bind-ip 10.0.0.13 --rpc-bind-port 12233 --daemon-address 10.0.0.13:12111
+```
+3. Run the market-place tests
+```
+npm run test-wallet-market-place
+```
+
 ## Wallet Tests
 1. Use Console to restore a testnet wallet from seed
 ```

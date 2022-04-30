@@ -10,6 +10,7 @@ const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 
 const rpcWallet = require('../../lib/rpcWallet.js')
+const rpcDaemon = require('../../lib/rpcDaemon.js')
 
 const config = require('./config')
 
@@ -20,6 +21,13 @@ describe('RPCWallet marketplace tests', () => {
                             password: config.walletPassword
                         })
     walletClient.sslRejectUnauthorized(false)
+
+    const daemonClient = rpcDaemon.createDaemonClient({
+                            url: config.daemonAddress,
+                            username: config.daemonUsername,
+                            password: config.daemonPassword
+                        })
+    daemonClient.sslRejectUnauthorized(false)
 
     beforeEach(async function() {
         try {} catch (error) {}
@@ -37,21 +45,14 @@ describe('RPCWallet marketplace tests', () => {
                         .and.to.have.property('total_offers', 0)
           })
     })
-    it('marketplace_push_offer', () => {
+    it('marketplace_push_offer', async () => {
         const opts = {
             od: {
-                // tx_hash: '',
-                // tx_original_hash: '',
-                // index_in_tx: '',
-                // timestamp: 0,
                 fee: config.units,
-                // security: '',
                 ot: 1,
                 ap: '20',
                 at: '1',
-                // b:
                 t: 'T-shirt with Zano logo',
-                // p
                 lco: 'World Wide',
                 lci: '',
                 cnt: 'Skype: some_skype, discord: some_user#01012',
@@ -63,25 +64,27 @@ describe('RPCWallet marketplace tests', () => {
                 url: ''
             }
         }
-        return expect(walletClient.marketplace_push_offer(opts))
-                    .to.eventually.have.keys('tx_hash', 'tx_blob_size')
+        console.log('\tcreating push offer ...')
+        let offer = await walletClient.marketplace_push_offer(opts)
+        let cancel_opts = {
+            tx_id: offer.tx_hash,
+            no: 0,
+            fee: config.units
+        }
+        await waitForConfirmations(1)
+        console.log(`\tcancelling  offer ${offer.tx_hash} ...`)
+        await walletClient.marketplace_cancel_offer(cancel_opts)
+        return expect(offer).to.have.keys('tx_hash', 'tx_blob_size')
     })
     it('marketplace_push_update_offer', async () => {
 
         const opts = {
             od: {
-                // tx_hash: '',
-                // tx_original_hash: '',
-                // index_in_tx: '',
-                // timestamp: 0,
                 fee: config.units,
-                // security: '',
                 ot: 1,
                 ap: '20',
                 at: '1',
-                // b:
                 t: 'T-shirt with Zano logo',
-                // p
                 lco: 'World Wide',
                 lci: '',
                 cnt: 'Skype: some_skype, discord: some_user#01012',
@@ -93,23 +96,37 @@ describe('RPCWallet marketplace tests', () => {
                 url: ''
             }
         }
+        console.log('\tcreating push offer ...')
         let offer = await walletClient.marketplace_push_offer(opts)
-        console.log('waiting for confirmations')
-        await waitForBlocks(1000 * 120)
+        console.log(`\twaiting for confirmation of push offer\ ${offer.tx_hash} ...`)
+        await waitForConfirmations(1)
+        
         opts.od.lco = 'Europe'
         opts.tx_id = offer.tx_hash
-            
+        opts.no = 0
+        console.log(`\tupdating  offer ${offer.tx_hash}  ...`)   
         offer = await walletClient.marketplace_push_update_offer(opts)
-        opts.tx_id = offer.tx_hash
-        return expect(1).to.equal(1)
-        // console.log('waiting for confirmations')
-        // await waitForBlocks(1000 * 60)
-        // return expect(walletClient.marketplace_cancel_offer(opts))
-        //             .to.eventually.have.keys('tx_hash', 'tx_blob_size')
-
+        let cancel_opts = {
+                tx_id: offer.tx_hash,
+                no: 0,
+                fee: config.units
+            }
+        await waitForConfirmations(1)
+        console.log(`\tcancelling  offer ${offer.tx_hash} ...`)
+        return expect(walletClient.marketplace_cancel_offer(cancel_opts))
+                    .to.eventually.have.keys('tx_hash', 'tx_blob_size')
     })
 
-    function waitForBlocks(numberOfBlocks) {
-        return new Promise(resolve => setTimeout(resolve, numberOfBlocks))
+    function delay(ms){
+        return new Promise(resolve => setTimeout(resolve, ms))
+    }
+
+    async function waitForConfirmations(numberOfConfirmations) {
+        let response = await daemonClient.getheight()
+        const inclusiveLimit = response.height + numberOfConfirmations
+        while (response.height < inclusiveLimit) {
+            response = await daemonClient.getheight()
+            await delay(config.seconds * 10)
+        }
     }
 })
