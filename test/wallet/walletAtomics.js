@@ -21,6 +21,13 @@ describe('RPCWallet atomic tests', () => {
                         })
     walletClient.sslRejectUnauthorized(false)
 
+    const otherClient = rpcWallet.createWalletClient({
+        url: config.watchOnlyWalletAddress,
+        username: config.watchOnlyWalletUsername,
+        password: config.watchOnlyWalletPassword
+    })
+    otherClient.sslRejectUnauthorized(false)
+
     before(async function() {
         try {
             
@@ -36,22 +43,44 @@ describe('RPCWallet atomic tests', () => {
         }
     })
     xit('atomics_create_htlc_proposal', () => {
-        return expect(walletClient.atomics_create_htlc_proposal({}))
-          .to.eventually.have.keys('result_tx_blob', 'result_tx_id', 'derived_origin_secret')
+        const opts = {
+            amount: config.units * 3,
+            counterparty_address: 'iZ2EDR1UGhGYcrWpvnnuvkGHHLre4dub961SnbAfB9fx6khF389FgURLHE9VHYq3n12FvJQLcPJjm5VRbLsFZivXhnByyZgfBqh2dsHDCMi5',
+            lock_blocks_count: 1440
+            // htlc_hash: ''
+        }
+        return expect(walletClient.atomics_create_htlc_proposal(opts))
+          .to.eventually.have.keys('result_tx_blob', 'result_tx_id', 'derived_origin_secret_as_hex')
     })
-    xit('atomics_get_list_of_active_htlc', () => {
-        return expect(walletClient.atomics_get_list_of_active_htlc({}))
-          .to.eventually.have.property('htlcs')
-          .to.eventually.have.keys('counterparty_address', 'sha256_hash', 'tx_id', 'amount', 'is_redeem')
-          .to.eventually.have.property('counterparty_address')
-          .that.eventually.have.keys('spend_public_key', 'view_public_key')
+    it('atomics_get_list_of_active_htlc', () => {
+        const opts = {
+            income_redeem_only: false
+        }
+        return expect(walletClient.atomics_get_list_of_active_htlc(opts))
+          .to.eventually.satisfy(function(response) {
+              if (Object.keys(response).length === 0) {
+                return expect(response).to.be.an('object').that.is.empty
+              }
+              else {
+                return expect(response)
+                .to.have.nested.property('htlcs[0]')
+                .that.have.nested.keys('amount', 'counterparty_address', 'is_redeem', 'sha256_hash', 'tx_id')
+              }
+          })
     })
-    xit('atomics_redeem_htlc', ({}) => {
-        return expect(walletClient.atomics_redeem_htlc({}))
+    xit('atomics_redeem_htlc', () => {
+        const opts = {
+            tx_id: '6a749af81b17414cd994f29c2c49110981ab7aa1777602a7cc31ef39db87f006',
+            origin_secret_as_hex: '08dd7ceadce0d63d2996a7b93ff5da026cdb7d22d4e1673401c7650ad1396ba0'
+        }
+        return expect(otherClient.atomics_redeem_htlc(opts))
           .to.eventually.have.keys('result_tx_blob', 'result_tx_id')
     })
-    xit('atomics_check_htlc_redeemed', ({}) => {
-        return expect(walletClient.atomics_check_htlc_redeemed({}))
-          .to.eventually.have.keys('origin_secrete', 'redeem_tx_id')
+    it('atomics_check_htlc_redeemed', () => {
+        const opts = {
+            htlc_tx_id: '6a749af81b17414cd994f29c2c49110981ab7aa1777602a7cc31ef39db87f006'
+        }
+        return expect(otherClient.atomics_check_htlc_redeemed(opts))
+          .to.eventually.have.keys('origin_secrete_as_hex', 'redeem_tx_id')
     })
 })

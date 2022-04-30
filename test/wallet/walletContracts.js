@@ -46,20 +46,18 @@ describe('RPCWallet contract tests', () => {
                     a_pledge: config.units,
                     b_pledge: config.units
                     },
-            // payment_id: config.payment_id,
             expiration_period: 5,
             fee: config.units * 1,
-            b_fee: config.units * 1,
-            // fake_outputs_count: 1,
-            // unlock_time: 0
+            b_fee: config.units * 1
         }
         return expect(walletClient.contracts_send_proposal(opts))
             .to.eventually.be.have.property('status', 'OK')
     })
     xit('contracts_accept_proposal', () => {
         const opts = {
-            contract_id: '474bb56ff629aa192da3ef3efe8abbf95845bd2d4c61530db371eead20e69848',
-            acceptance_fee: config.units
+            contract_id: 'ee684ba629ef3e1c11ef02a280b93841822e25ec30b0cd27c18153a98a527ca5',
+            // acceptance_fee: config.units
+            // wallet_id: 0
         }
         return expect(walletClient.contracts_accept_proposal(opts))
             .to.eventually.be.an('object').that.is.empty
@@ -80,7 +78,7 @@ describe('RPCWallet contract tests', () => {
     })
     xit('contracts_release', () => {
         const opts = {
-            contract_id: '474bb56ff629aa192da3ef3efe8abbf95845bd2d4c61530db371eead20e69848', 
+            contract_id: 'ee684ba629ef3e1c11ef02a280b93841822e25ec30b0cd27c18153a98a527ca5', 
             release_type: 'burn'
         }
         return expect(walletClient.contracts_release(opts))
@@ -89,16 +87,16 @@ describe('RPCWallet contract tests', () => {
     xit('contracts_request_cancel', () => {
         const opts = {
             wallet_id: '',
-            contract_id: '474bb56ff629aa192da3ef3efe8abbf95845bd2d4c61530db371eead20e69848', 
+            contract_id: 'ee684ba629ef3e1c11ef02a280b93841822e25ec30b0cd27c18153a98a527ca5', 
             fee: 10000000000,
             expiration_period: 1 
         }
         return expect(walletClient.contracts_request_cancel(opts))
             .to.eventually.be.an('object').that.is.empty
     })
-    xit('contracts_accept_cancel', () => {
+    it('contracts_accept_cancel', () => {
         const opts = {
-            contract_id: '474bb56ff629aa192da3ef3efe8abbf95845bd2d4c61530db371eead20e69848'
+            contract_id: 'ee684ba629ef3e1c11ef02a280b93841822e25ec30b0cd27c18153a98a527ca5'
         }
         return expect(walletClient.contracts_accept_cancel(opts))
             .to.eventually.be.an('object').that.is.empty
