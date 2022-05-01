@@ -15,7 +15,7 @@ const rpcDaemon = require('../../lib/rpcDaemon.js')
 const config = require('./config')
 const utils = require('./utils')
 
-describe('RPCWallet atomic tests', () => {
+describe('RPCWallet atomics tests', () => {
     const walletClient = rpcWallet.createWalletClient({
                             url: config.walletAddress,
                             username: config.walletUsername,
