@@ -10,8 +10,10 @@ const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 
 const rpcWallet = require('../../lib/rpcWallet.js')
+const rpcDaemon = require('../../lib/rpcDaemon.js')
 
 const config = require('./config')
+const utils = require('./utils')
 
 describe('RPCWallet atomic tests', () => {
     const walletClient = rpcWallet.createWalletClient({
@@ -28,6 +30,13 @@ describe('RPCWallet atomic tests', () => {
     })
     otherClient.sslRejectUnauthorized(false)
 
+    const daemonClient = rpcDaemon.createDaemonClient({
+        url: config.daemonAddress,
+        username: config.daemonUsername,
+        password: config.daemonPassword
+    })
+    daemonClient.sslRejectUnauthorized(false)
+
     before(async function() {
         try {
             
@@ -42,6 +51,34 @@ describe('RPCWallet atomic tests', () => {
             
         }
     })
+    it('perform atomic swap between two zano wallets', async () =>{
+        const proposal_opts = {
+            amount: config.units * 1,
+            counterparty_address: 'iZ2EDR1UGhGYcrWpvnnuvkGHHLre4dub961SnbAfB9fx6khF389FgURLHE9VHYq3n12FvJQLcPJjm5VRbLsFZivXhnByyZgfBqh2dsHDCMi5',
+            lock_blocks_count: 10
+            // htlc_hash: ''
+        }
+        const proposal = await walletClient.atomics_create_htlc_proposal(proposal_opts)
+        await utils.waitForConfirmations(daemonClient, 1)
+        const list_opts = {
+            income_redeem_only: false
+        }
+        const active_htlcs = await walletClient.atomics_get_list_of_active_htlc(list_opts)
+
+        const redeem_opts = {
+            tx_id: proposal.result_tx_id,
+            origin_secret_as_hex: proposal.derived_origin_secret_as_hex
+        }
+        const redeemed = await otherClient.atomics_redeem_htlc(redeem_opts)
+        await utils.waitForConfirmations(daemonClient, 1)
+        const redeemed_opts = {
+            htlc_tx_id: proposal.result_tx_id
+        }
+        const htlc_redeemed = await otherClient.atomics_check_htlc_redeemed(redeemed_opts)
+
+        return expect(htlc_redeemed).to.have.property('origin_secrete_as_hex', proposal.derived_origin_secret_as_hex, 'redeem_tx_id', proposal.result_tx_id)
+
+    })
     xit('atomics_create_htlc_proposal', () => {
         const opts = {
             amount: config.units * 3,
@@ -52,7 +89,7 @@ describe('RPCWallet atomic tests', () => {
         return expect(walletClient.atomics_create_htlc_proposal(opts))
           .to.eventually.have.keys('result_tx_blob', 'result_tx_id', 'derived_origin_secret_as_hex')
     })
-    it('atomics_get_list_of_active_htlc', () => {
+    xit('atomics_get_list_of_active_htlc', () => {
         const opts = {
             income_redeem_only: false
         }
@@ -76,7 +113,7 @@ describe('RPCWallet atomic tests', () => {
         return expect(otherClient.atomics_redeem_htlc(opts))
           .to.eventually.have.keys('result_tx_blob', 'result_tx_id')
     })
-    it('atomics_check_htlc_redeemed', () => {
+    xit('atomics_check_htlc_redeemed', () => {
         const opts = {
             htlc_tx_id: '6a749af81b17414cd994f29c2c49110981ab7aa1777602a7cc31ef39db87f006'
         }

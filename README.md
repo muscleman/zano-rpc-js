@@ -89,7 +89,7 @@ npm test
 ```
 ./simplewallet --restore-wallet muscleman.test --password 123456 
 ```
-2. Use Console execute following to open normal wallet as a service with screen
+2. Use Console to execute following command to open normal wallet as a service with screen
 ```
 screen -S regularwallet ./simplewallet --wallet-file muscleman.test --password 123456 --rpc-bind-ip 10.0.0.13 --rpc-bind-port 12233 --daemon-address 10.0.0.13:12111
 ```
@@ -103,7 +103,7 @@ npm run test-wallet-market-place
 ```
 ./simplewallet --restore-wallet muscleman.test --password 123456 
 ```
-2. Use Console execute following to open normal wallet as a service with screen
+2. Use Console to execute following command to open normal wallet as a service with screen
 ```
 screen -S regularwallet ./simplewallet --wallet-file muscleman.test --password 123456 --rpc-bind-ip 10.0.0.13 --rpc-bind-port 12233 --daemon-address 10.0.0.13:12111
 ```
@@ -118,15 +118,15 @@ npm run test-wallet-account
 ```
 ./simplewallet --restore-wallet muscleman.test --password 123456 
 ```
-2. when instructed provide the following seed phrase
+2. when instructed, provide the following seed phrase
 ```
 coffee rest stand said leg muse defense wild about mighty horse melt really hum sharp seek honest brush depress beyond hundred silly confusion inhale birthday frozen
 ```
-3. when instructed provide the following password for the secured seed
+3. when instructed, provide the following password for the secured seed
 ```
 123456
 ```
-4. Use Console execute following to open normal wallet as a service with screen
+4. Use Console to execute following command to open normal wallet as a service with screen
 ```
 screen -S regularwallet ./simplewallet --wallet-file muscleman.test --password 123456 --rpc-bind-ip 10.0.0.13 --rpc-bind-port 12233 --daemon-address 10.0.0.13:12111
 ```
@@ -134,15 +134,15 @@ screen -S regularwallet ./simplewallet --wallet-file muscleman.test --password 1
 ```
 ./simplewallet --restore-wallet muscleman.test --password 123456 
 ```
-6. when instructed provide the following seed phrase
+6. when instructed, provide the following seed phrase
 ```
 obviously essence rise wow appear glove veil gain beneath ask suddenly manage thunder near sympathy respect pants led lucky pie rant water deeply mean shift somebody
 ```
-7. when instructed provide the following password for the secured seed
+7. when instructed, provide the following password for the secured seed
 ```
 123456
 ```
-8. Use Console execute following to open normal wallet as a service with screen
+8. Use Console to execute following command to open normal wallet as a service with screen
 ```
 screen -S otherwallet ./simplewallet --wallet-file muscleman.other --password 123456 --rpc-bind-ip 10.0.0.13 --rpc-bind-port 12234 --daemon-address 10.0.0.13:12111
 ```
@@ -153,11 +153,11 @@ screen -S otherwallet ./simplewallet --wallet-file muscleman.other --password 12
 ```
 ./simplewallet --restore-wallet muscleman.test --password 123456 
 ```
-2. when instructed provide the following seed phrase
+2. when instructed, provide the following seed phrase
 ```
 coffee rest stand said leg muse defense wild about mighty horse melt really hum sharp seek honest brush depress beyond hundred silly confusion inhale birthday frozen
 ```
-3. when instructed provide the following password for the secured seed
+3. when instructed, provide the following password for the secured seed
 ```
 123456
 ```
@@ -165,11 +165,11 @@ coffee rest stand said leg muse defense wild about mighty horse melt really hum 
 ```
 save_watch_only muscleman.watch 123456
 ```
-5. Use Console execute following to open watch_only wallet as a service with screen
+5. Use Console to execute following command to open watch_only wallet as a service with screen
 ```
 screen -S watchonlywallet ./simplewallet --wallet-file muscleman.watch --password 123456 --rpc-bind-ip 10.0.0.13 --rpc-bind-port 12234 --daemon-address 10.0.0.13:12111
 ```
-6. Use Console execute following to open normal wallet as a service with screen
+6. Use Console to execute following command to open normal wallet as a service with screen
 ```
 screen -S regularwallet ./simplewallet --wallet-file muscleman.test --password 123456 --rpc-bind-ip 10.0.0.13 --rpc-bind-port 12233 --daemon-address 10.0.0.13:12111
 ```

@@ -2,7 +2,6 @@
 
 const describe = require('mocha').describe
 const it = require('mocha').it
-const before = require('mocha').before
 const after = require('mocha').after
 const chai = require('chai')
 const expect = chai.expect
@@ -13,6 +12,7 @@ const rpcWallet = require('../../lib/rpcWallet.js')
 const rpcDaemon = require('../../lib/rpcDaemon.js')
 
 const config = require('./config')
+const utils = require('./utils')
 
 describe('RPCWallet marketplace tests', () => {
     const walletClient = rpcWallet.createWalletClient({
@@ -71,7 +71,7 @@ describe('RPCWallet marketplace tests', () => {
             no: 0,
             fee: config.units
         }
-        await waitForConfirmations(1)
+        await utils.waitForConfirmations(daemonClient, 1)
         console.log(`\tcancelling  offer ${offer.tx_hash} ...`)
         await walletClient.marketplace_cancel_offer(cancel_opts)
         return expect(offer).to.have.keys('tx_hash', 'tx_blob_size')
@@ -99,7 +99,7 @@ describe('RPCWallet marketplace tests', () => {
         console.log('\tcreating push offer ...')
         let offer = await walletClient.marketplace_push_offer(opts)
         console.log(`\twaiting for confirmation of push offer\ ${offer.tx_hash} ...`)
-        await waitForConfirmations(1)
+        await utils.waitForConfirmations(daemonClient, 1)
         
         opts.od.lco = 'Europe'
         opts.tx_id = offer.tx_hash
@@ -111,22 +111,9 @@ describe('RPCWallet marketplace tests', () => {
                 no: 0,
                 fee: config.units
             }
-        await waitForConfirmations(1)
+        await utils.waitForConfirmations(daemonClient, 1)
         console.log(`\tcancelling  offer ${offer.tx_hash} ...`)
         return expect(walletClient.marketplace_cancel_offer(cancel_opts))
                     .to.eventually.have.keys('tx_hash', 'tx_blob_size')
     })
-
-    function delay(ms){
-        return new Promise(resolve => setTimeout(resolve, ms))
-    }
-
-    async function waitForConfirmations(numberOfConfirmations) {
-        let response = await daemonClient.getheight()
-        const inclusiveLimit = response.height + numberOfConfirmations
-        while (response.height < inclusiveLimit) {
-            response = await daemonClient.getheight()
-            await delay(config.seconds * 10)
-        }
-    }
 })
