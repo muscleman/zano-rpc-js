@@ -54,26 +54,29 @@ describe('RPCWallet atomics tests', () => {
     it('perform atomic swap between two zano wallets', async () =>{
         const proposal_opts = {
             amount: config.units * 1,
-            counterparty_address: 'iZ2EDR1UGhGYcrWpvnnuvkGHHLre4dub961SnbAfB9fx6khF389FgURLHE9VHYq3n12FvJQLcPJjm5VRbLsFZivXhnByyZgfBqh2dsHDCMi5',
+            counterparty_address: config.integratedTestAddressB,
             lock_blocks_count: 10
             // htlc_hash: ''
         }
+        console.log('\tcreating htlc proposal ...')
         const proposal = await walletClient.atomics_create_htlc_proposal(proposal_opts)
         await utils.waitForConfirmations(daemonClient, 1)
         const list_opts = {
             income_redeem_only: false
         }
-        const active_htlcs = await walletClient.atomics_get_list_of_active_htlc(list_opts)
+        await walletClient.atomics_get_list_of_active_htlc(list_opts)
 
         const redeem_opts = {
             tx_id: proposal.result_tx_id,
             origin_secret_as_hex: proposal.derived_origin_secret_as_hex
         }
-        const redeemed = await otherClient.atomics_redeem_htlc(redeem_opts)
+        console.log('\tredeeming htlc proposal ...')
+        await otherClient.atomics_redeem_htlc(redeem_opts)
         await utils.waitForConfirmations(daemonClient, 1)
         const redeemed_opts = {
             htlc_tx_id: proposal.result_tx_id
         }
+        console.log('\tchecking propoal has been redeemed ...')
         const htlc_redeemed = await otherClient.atomics_check_htlc_redeemed(redeemed_opts)
 
         return expect(htlc_redeemed).to.have.property('origin_secrete_as_hex', proposal.derived_origin_secret_as_hex, 'redeem_tx_id', proposal.result_tx_id)
