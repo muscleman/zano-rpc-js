@@ -89,7 +89,7 @@ describe('RPCWallet atomics tests', () => {
         return expect(walletClient.atomics_create_htlc_proposal(opts))
           .to.eventually.have.keys('result_tx_blob', 'result_tx_id', 'derived_origin_secret_as_hex')
     })
-    xit('atomics_get_list_of_active_htlc', () => {
+    it('atomics_get_list_of_active_htlc', () => {
         const opts = {
             income_redeem_only: false
         }
