@@ -146,7 +146,10 @@ obviously essence rise wow appear glove veil gain beneath ask suddenly manage th
 ```
 screen -S otherwallet ./simplewallet --wallet-file muscleman.other --password 123456 --rpc-bind-ip 10.0.0.13 --rpc-bind-port 12234 --daemon-address 10.0.0.13:12111
 ```
-
+9. Run the atomic tests
+```
+npm run test-wallet-atomics
+```
 
 ## Cold Signing Tests
 1. Use Console to restore a testnet wallet from seed
@@ -176,4 +179,43 @@ screen -S regularwallet ./simplewallet --wallet-file muscleman.test --password 1
 7. Run the cold-signing tests
 ```
 npm run test-wallet-cold-signing
+```
+
+## Contract Tests
+***NOTE: tests require two wallets and can take several minutes to complete while block confirmations occur***
+1. Use Console to restore a testnet wallet from seed
+```
+./simplewallet --restore-wallet muscleman.test --password 123456 
+```
+2. when instructed, provide the following seed phrase
+```
+coffee rest stand said leg muse defense wild about mighty horse melt really hum sharp seek honest brush depress beyond hundred silly confusion inhale birthday frozen
+```
+3. when instructed, provide the following password for the secured seed
+```
+123456
+```
+4. Use Console to execute following command to open normal wallet as a service with screen
+```
+screen -S regularwallet ./simplewallet --wallet-file muscleman.test --password 123456 --rpc-bind-ip 10.0.0.13 --rpc-bind-port 12233 --daemon-address 10.0.0.13:12111
+```
+5. Use Console to restore a testnet wallet from seed
+```
+./simplewallet --restore-wallet muscleman.test --password 123456 
+```
+6. when instructed, provide the following seed phrase
+```
+obviously essence rise wow appear glove veil gain beneath ask suddenly manage thunder near sympathy respect pants led lucky pie rant water deeply mean shift somebody
+```
+7. when instructed, provide the following password for the secured seed
+```
+123456
+```
+8. Use Console to execute following command to open normal wallet as a service with screen
+```
+screen -S otherwallet ./simplewallet --wallet-file muscleman.other --password 123456 --rpc-bind-ip 10.0.0.13 --rpc-bind-port 12234 --daemon-address 10.0.0.13:12111
+```
+9. Run the contract tests
+```
+npm run test-wallet-contracts
 ```

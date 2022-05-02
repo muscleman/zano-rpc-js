@@ -24,32 +24,24 @@ describe('RPCWallet atomics tests', () => {
     walletClient.sslRejectUnauthorized(false)
 
     const otherClient = rpcWallet.createWalletClient({
-        url: config.watchOnlyWalletAddress,
-        username: config.watchOnlyWalletUsername,
-        password: config.watchOnlyWalletPassword
+                        url: config.watchOnlyWalletAddress,
+                        username: config.watchOnlyWalletUsername,
+                        password: config.watchOnlyWalletPassword
     })
     otherClient.sslRejectUnauthorized(false)
 
     const daemonClient = rpcDaemon.createDaemonClient({
-        url: config.daemonAddress,
-        username: config.daemonUsername,
-        password: config.daemonPassword
-    })
+                        url: config.daemonAddress,
+                        username: config.daemonUsername,
+                        password: config.daemonPassword
+                    })
     daemonClient.sslRejectUnauthorized(false)
 
     before(async function() {
-        try {
-            
-        } catch (error) {
-            
-        }
+        try {} catch (error) {}
     })
     after(async function() {
-        try {
-            
-        } catch (error) {
-            
-        }
+        try {} catch (error) {}
     })
     it('perform atomic swap between two zano wallets', async () =>{
         const proposal_opts = {

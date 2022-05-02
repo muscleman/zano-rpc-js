@@ -21,7 +21,8 @@ exports = module.exports = {
   standardTestAddressB: 'ZxCk67uvCdxYcrWpvnnuvkGHHLre4dub961SnbAfB9fx6khF389FgURLHE9VHYq3n12FvJQLcPJjm5VRbLsFZivX36QY1BGGp',
   payment_idB: '6e9ef82dc7d0be81',
   txids: ['4a89327a4b9bf93d902646f94ee04b0fb0c5e11f19a47429b38df853c3246d3b', '6833e0d829ea5aa454d455142301eb71e7635c09527842b2ca501cf613a4d3d4'],
-  units: 100000000000,
+  units: 1000000000000,
+  fee: 10000000000,
   seconds: 1000
 
 }

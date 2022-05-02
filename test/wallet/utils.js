@@ -2,9 +2,7 @@
 
 const config = require('./config')
 
-function delay(ms){
-    return new Promise(resolve => setTimeout(resolve, ms))
-}
+
 
 let utils = {
 
@@ -13,8 +11,11 @@ let utils = {
         const inclusiveLimit = response.height + numberOfConfirmations
         while (response.height < inclusiveLimit) {
             response = await daemon_client.getheight()
-            await delay(config.seconds * 10)
+            await utils.delay(config.seconds * 10)
         }
+    },
+    delay: function delay(ms){
+        return new Promise(resolve => setTimeout(resolve, ms))
     }
 }
 

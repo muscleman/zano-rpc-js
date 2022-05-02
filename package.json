@@ -17,14 +17,15 @@
     "chai-as-promised": "^7.1.1",
     "jsdoc": "^3.6.10",
     "jsdoc-chameleon-template": "^1.0.2",
-    "mocha": "^9.2.2"
+    "mocha": "^9.2.2",
+    "uuid": "8.3.2"
   },
   "scripts": {
     "test": "node ./test/info.js",
     "test-http-digest": "mocha -t 60000 ./test/digest/httpDigest.js",
     "test-daemon-functions": "mocha -t 60000 ./test/daemon/daemonFunctions.js",
     "test-wallet-account": "mocha -t 60000 ./test/wallet/walletAccount.js",
-    "test-wallet-contracts": "mocha -t 60000 ./test/wallet/walletContracts.js",
+    "test-wallet-contracts": "mocha -t 7200000 ./test/wallet/walletContracts.js",
     "test-wallet-market-place": "mocha -t 600000 ./test/wallet/walletMarketPlace.js",
     "test-wallet-atomics": "mocha -t 600000 ./test/wallet/walletAtomics.js",
     "test-wallet-cold-signing": "mocha -t 60000 ./test/wallet/walletColdSigning.js",
